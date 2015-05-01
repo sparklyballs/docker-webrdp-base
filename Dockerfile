@@ -4,17 +4,8 @@ MAINTAINER sparklyballs <sparkly@madeupemail.com>
 # Set correct environment variables
 ENV DEBIAN_FRONTEND=noninteractive HOME="/root" TERM=xterm LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
 
-# set ports
-EXPOSE 8080 3389
-
-# Use baseimage-docker's init system
-CMD ["/sbin/my_init"]
-
 # Add required files that are local
 ADD src/ /root/
-
-# set config volume
-VOLUME /config
 
 # Set the locale
 RUN locale-gen en_US.UTF-8 && \
@@ -36,10 +27,8 @@ mkdir /nobody/.cache && \
 echo 'deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main universe restricted' > /etc/apt/sources.list && \
 echo 'deb mirror://mirrors.ubuntu.com/mirrors.txt trusty-updates main universe restricted' >> /etc/apt/sources.list && \
 add-apt-repository ppa:no1wantdthisname/openjdk-fontfix && \
-add-apt-repository ppa:stebbins/handbrake-releases && \
 apt-get update -qq && \
 apt-get install -qy --force-yes --no-install-recommends wget unzip vnc4server x11-xserver-utils openbox xfonts-base xfonts-100dpi xfonts-75dpi libfuse2 xrdp openjdk-7-jre libossp-uuid-dev libpng12-dev libfreerdp-dev libcairo2-dev tomcat7 && \
-apt-get install -qy handbrake && \
 
 # fix startup files etc....
 mv /root/00_config.sh /etc/my_init.d/00_config.sh && \
@@ -54,9 +43,7 @@ mkdir -p /etc/guacamole && \
 mv /root/guacamole.properties /etc/guacamole/guacamole.properties && \
 mv /root/noauth-config.xml /etc/guacamole/noauth-config.xml && \
 mv  /root/rc.xml /nobody/.config/openbox/rc.xml && \
-mv /root/autostart /nobody/.config/openbox/autostart && \
 chown nobody:users /nobody/.config/openbox/rc.xml && \
-chown -R nobody:users /config /nobody /usr/bin/handbrake && \
 
 # install tomcat and guacamole
 mkdir -p /var/cache/tomcat7 && \
