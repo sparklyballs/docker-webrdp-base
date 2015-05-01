@@ -1,5 +1,5 @@
 FROM phusion/baseimage:0.9.16
-MAINTAINER sparklyballs <sparkly@madeupemail.com>
+MAINTAINER hurricane & sparklyballs
 
 # Set correct environment variables
 ENV DEBIAN_FRONTEND=noninteractive HOME="/root" TERM=xterm LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
